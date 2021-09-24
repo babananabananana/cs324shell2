@@ -167,6 +167,86 @@ int main(int argc, char **argv)
 */
 void eval(char *cmdline) 
 {
+    int bg;
+    int status;
+//    int pid;
+    char *argv[MAXARGS];
+    int cmds[MAXARGS];
+    int stdin_redir[MAXARGS];
+    int stdout_redir[MAXARGS];
+    int pid[MAXARGS];
+
+    FILE* fd[MAXARGS];
+
+    bg = parseline(cmdline, argv); //parseline returns true if its a background
+    if(!builtin_cmd(argv)){
+        int numcmd = parseargs(argv, cmds, stdin_redir, stdout_redir);
+        int p[numcmd -1][2]; //PIPES
+
+        for (int i = 0; i < numcmd; ++i) {
+            //except last
+            if(i != numcmd-1) {
+                pipe(p[i]); //PIPES
+            }
+            pid[i] = fork();
+
+            if (pid[i] == 0) {
+                //am child
+                setpgid(pid[i], pid[0]);
+
+                if(i > 0){ //not first
+                    dup2(p[i-1][0], STDIN_FILENO);
+
+                    close(p[i-1][0]);
+                }
+                if(i != numcmd - 1) {
+                    dup2(p[i][1], STDOUT_FILENO);
+
+                    close(p[i][0]);
+                    close(p[i][1]);
+                }
+
+                //FILE STUFF
+                if (stdin_redir[i] != -1) {
+                    fd[2 * i] = fopen(argv[stdin_redir[i]], "r");
+                    int inFileNum = fileno(fd[2 * i]);
+                    dup2( inFileNum, 0);
+                }
+                if (stdout_redir[i] != -1) {
+                    int fileindex = ((2 * i) + 1);
+                    fd[fileindex] = fopen(argv[stdout_redir[i]], "w");
+                    int outFileNum = fileno(fd[fileindex]);
+                    dup2(outFileNum, 1);
+                }
+
+                execv(argv[cmds[i]], &argv[cmds[i]]);
+                printf("Command not found. \n");
+                exit(1);
+            }else{
+                //parent closes sending end, saves recieve for next round.
+
+                if(i != numcmd - 1) {
+                    close(p[i][1]);
+                }
+
+                if(i>0){
+                    close(p[i-1][0]);
+                }
+
+            }
+        }
+        if(!bg){
+//            waitpid(-100, &status, 0);
+//            while ((pid = wait(&status)) > 0);
+            int process;
+            for(int j = 0; j < numcmd; j++){
+                while((process=waitpid(pid[j],&status,0))!=-1){
+//                    printf("Process %d terminated\n",process);
+                }
+            }
+        }
+    }
+
     return;
 }
 
@@ -294,8 +374,10 @@ int parseline(const char *cmdline, char **argv)
  */
 int builtin_cmd(char **argv) 
 {
-    return 0;     /* not a builtin command */
-}
+    if(strcmp(argv[0],"quit") == 0){
+        exit(0);
+    }
+    return 0;    }
 
 /* 
  * do_bgfg - Execute the builtin bg and fg commands
