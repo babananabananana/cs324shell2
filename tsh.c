@@ -169,34 +169,44 @@ void eval(char *cmdline)
 {
     int bg;
     int status;
-//    int pid;
     char *argv[MAXARGS];
     int cmds[MAXARGS];
     int stdin_redir[MAXARGS];
     int stdout_redir[MAXARGS];
     int pid[MAXARGS];
-
     FILE* fd[MAXARGS];
+    sigset_t mask_all, mask_one, prev_one;
+
+    //setSignals
+    sigfillset(&mask_all);
+    sigemptyset(&mask_one);
+    sigaddset(&mask_one, SIGCHLD);
+    initjobs(jobs);
+    //
 
     bg = parseline(cmdline, argv); //parseline returns true if its a background
+
     if(!builtin_cmd(argv)){
         int numcmd = parseargs(argv, cmds, stdin_redir, stdout_redir);
         int p[numcmd -1][2]; //PIPES
 
         for (int i = 0; i < numcmd; ++i) {
-            //except last
             if(i != numcmd-1) {
-                pipe(p[i]); //PIPES
-            }
+                //except last
+                pipe(p[i]);
+            } //PIPES
+
+            sigprocmask(SIG_BLOCK, &mask_one, &prev_one);
             pid[i] = fork();
 
             if (pid[i] == 0) {
+                sigprocmask(SIG_SETMASK, &prev_one, NULL);
                 //am child
                 setpgid(pid[i], pid[0]);
 
+                //*pipe
                 if(i > 0){ //not first
                     dup2(p[i-1][0], STDIN_FILENO);
-
                     close(p[i-1][0]);
                 }
                 if(i != numcmd - 1) {
@@ -205,6 +215,7 @@ void eval(char *cmdline)
                     close(p[i][0]);
                     close(p[i][1]);
                 }
+                //*end-pipe
 
                 //FILE STUFF
                 if (stdin_redir[i] != -1) {
@@ -223,21 +234,24 @@ void eval(char *cmdline)
                 printf("Command not found. \n");
                 exit(1);
             }else{
-                //parent closes sending end, saves recieve for next round.
+                sigprocmask(SIG_BLOCK, &mask_all, NULL);
+                //TODO: add state (fg, bg)
+                addjob(jobs, pid[i], pid[0], UNDEF, cmdline);
+                sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
+                //*pipe
+                //parent closes sending end, saves recieve for next round.
                 if(i != numcmd - 1) {
                     close(p[i][1]);
                 }
-
                 if(i>0){
                     close(p[i-1][0]);
                 }
+                //*end pipe
 
             }
         }
         if(!bg){
-//            waitpid(-100, &status, 0);
-//            while ((pid = wait(&status)) > 0);
             int process;
             for(int j = 0; j < numcmd; j++){
                 while((process=waitpid(pid[j],&status,0))!=-1){
@@ -245,6 +259,7 @@ void eval(char *cmdline)
                 }
             }
         }
+        //TODO: else if bg
     }
 
     return;
