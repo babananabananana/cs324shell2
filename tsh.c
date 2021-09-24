@@ -174,6 +174,7 @@ void eval(char *cmdline)
     int stdin_redir[MAXARGS];
     int stdout_redir[MAXARGS];
     int pid[MAXARGS];
+    int jid;
     FILE* fd[MAXARGS];
     sigset_t mask_all, mask_one, prev_one;
 
@@ -237,6 +238,7 @@ void eval(char *cmdline)
                 sigprocmask(SIG_BLOCK, &mask_all, NULL);
                 //TODO: add state (fg, bg)
                 addjob(jobs, pid[i], pid[0], UNDEF, cmdline);
+                jid = jobs[i].jid;
                 sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
                 //*pipe
@@ -249,6 +251,10 @@ void eval(char *cmdline)
                 }
                 //*end pipe
 
+                if(bg){
+                    printf("[%d] (%d) %s\n", jid, pid[i], cmdline);
+                }
+
             }
         }
         if(!bg){
@@ -259,7 +265,6 @@ void eval(char *cmdline)
                 }
             }
         }
-        //TODO: else if bg
     }
 
     return;
