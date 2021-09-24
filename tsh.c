@@ -235,11 +235,7 @@ void eval(char *cmdline)
                 printf("Command not found. \n");
                 exit(1);
             }else{
-                sigprocmask(SIG_BLOCK, &mask_all, NULL);
-                //TODO: add state (fg, bg)
-                addjob(jobs, pid[i], pid[0], UNDEF, cmdline);
-                jid = jobs[i].jid;
-                sigprocmask(SIG_SETMASK, &prev_one, NULL);
+
 
                 //*pipe
                 //parent closes sending end, saves recieve for next round.
@@ -251,19 +247,27 @@ void eval(char *cmdline)
                 }
                 //*end pipe
 
-                if(bg){
-                    printf("[%d] (%d) %s\n", jid, pid[i], cmdline);
-                }
-
             }
         }
+        int state = !bg ? FG:BG;
+        sigprocmask(SIG_BLOCK, &mask_all, NULL);
+        addjob(jobs, pid[0], pid[0], state, cmdline);
+        //TODO: jobs[this job]
+        jid = jobs[0].jid;
+        sigprocmask(SIG_SETMASK, &prev_one, NULL);
+
         if(!bg){
+            //TODO: waitfg(pid[last]);
             int process;
+
             for(int j = 0; j < numcmd; j++){
                 while((process=waitpid(pid[j],&status,0))!=-1){
 //                    printf("Process %d terminated\n",process);
                 }
             }
+
+        } else{
+            printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
         }
     }
 
