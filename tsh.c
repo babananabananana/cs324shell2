@@ -253,7 +253,8 @@ void eval(char *cmdline)
         sigprocmask(SIG_BLOCK, &mask_all, NULL);
         addjob(jobs, pid[0], pid[0], state, cmdline);
         //TODO: jobs[this job]
-        jid = jobs[0].jid;
+//        jid = jobs[0].jid;
+        jid = 1;
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
         if(!bg){
