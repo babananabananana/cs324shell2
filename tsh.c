@@ -189,67 +189,67 @@ void eval(char *cmdline)
 
     if(!builtin_cmd(argv)){
         int numcmd = parseargs(argv, cmds, stdin_redir, stdout_redir);
-//        int p[numcmd -1][2]; //PIPES
+        int p[numcmd -1][2]; //PIPES
 
-//        for (int i = 0; i < numcmd; ++i) {
-//            if(i != numcmd-1) {
-//                //except last
-//                pipe(p[i]);
-//            } //PIPES
+        for (int i = 0; i < numcmd; ++i) {
+            if(i != numcmd-1) {
+                //except last
+                pipe(p[i]);
+            } //PIPES
 
             sigprocmask(SIG_BLOCK, &mask_one, &prev_one);
             mypid = fork();
-            pid[0] = mypid; //pid[i]
+            pid[i] = mypid;
 
-            if (mypid == 0) {
+            if (pid[i] == 0) {
                 sigprocmask(SIG_SETMASK, &prev_one, NULL);
                 //am child
-                setpgid(mypid, pid[0]);
+                setpgid(pid[i], pid[0]);
 
                 //*pipe
-//                if(i > 0){ //not first
-//                    dup2(p[i-1][0], STDIN_FILENO);
-//                    close(p[i-1][0]);
-//                }
-//                if(i != numcmd - 1) {
-//                    dup2(p[i][1], STDOUT_FILENO);
-//
-//                    close(p[i][0]);
-//                    close(p[i][1]);
-//                }
+                if(i > 0){ //not first
+                    dup2(p[i-1][0], STDIN_FILENO);
+                    close(p[i-1][0]);
+                }
+                if(i != numcmd - 1) {
+                    dup2(p[i][1], STDOUT_FILENO);
+
+                    close(p[i][0]);
+                    close(p[i][1]);
+                }
                 //*end-pipe
 
                 //FILE STUFF
-//                if (stdin_redir[i] != -1) {
-//                    fd[2 * i] = fopen(argv[stdin_redir[i]], "r");
-//                    int inFileNum = fileno(fd[2 * i]);
-//                    dup2( inFileNum, 0);
-//                }
-//                if (stdout_redir[i] != -1) {
-//                    int fileindex = ((2 * i) + 1);
-//                    fd[fileindex] = fopen(argv[stdout_redir[i]], "w");
-//                    int outFileNum = fileno(fd[fileindex]);
-//                    dup2(outFileNum, 1);
-//                }
+                if (stdin_redir[i] != -1) {
+                    fd[2 * i] = fopen(argv[stdin_redir[i]], "r");
+                    int inFileNum = fileno(fd[2 * i]);
+                    dup2( inFileNum, 0);
+                }
+                if (stdout_redir[i] != -1) {
+                    int fileindex = ((2 * i) + 1);
+                    fd[fileindex] = fopen(argv[stdout_redir[i]], "w");
+                    int outFileNum = fileno(fd[fileindex]);
+                    dup2(outFileNum, 1);
+                }
 
-                execv(argv[0], &argv[0]); //argv[cmds[i]];
-                printf("Command -%s-not found. \n", argv[0]); //cmds[i];
+                execv(argv[cmds[i]], &argv[cmds[i]]);
+                printf("Command -%s-not found. \n", argv[cmds[i]]);
                 exit(1);
             }else{
 
 
                 //*pipe
                 //parent closes sending end, saves recieve for next round.
-//                if(i != numcmd - 1) {
-//                    close(p[i][1]);
-//                }
-//                if(i>0){
-//                    close(p[i-1][0]);
-//                }
+                if(i != numcmd - 1) {
+                    close(p[i][1]);
+                }
+                if(i>0){
+                    close(p[i-1][0]);
+                }
                 //*end pipe
 
             }
-//        }
+        }
         int state = !bg ? FG:BG;
         sigprocmask(SIG_BLOCK, &mask_all, NULL);
         addjob(jobs, mypid, pid[0], state, cmdline);
@@ -400,6 +400,9 @@ int builtin_cmd(char **argv)
     }
     if(strcmp(argv[0], "jobs") == 0){
         listjobs(jobs);
+    }
+    if(strcmp(argv[0], "SLEEP") == 0){
+        sleep(argv[1]);
     }
     return 0;    }
 
