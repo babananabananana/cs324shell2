@@ -262,15 +262,7 @@ void eval(char *cmdline)
 
 //        jid = 1;
         if(!bg){
-            //TODO: waitfg(pid[last]);
-//            int process;
-//
-//            for(int j = 0; j < numcmd; j++){
-//                while((process=waitpid(pid[j],&status,0))!=-1){
-////                    printf("Process %d terminated\n",process);
-//                }
-//            }
-
+            waitfg(mypid);
         } else{
             listjobs(jobs);
             printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
