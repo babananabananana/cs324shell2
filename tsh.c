@@ -451,6 +451,10 @@ void sigchld_handler(int sig)
             kill(pid, SIGCHLD);
             sigprocmask(SIG_SETMASK, &prev_all, NULL);
         } else if (WIFSIGNALED(status)) {
+            sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+            deletejob(jobs, pid);
+            kill(pid, SIGCHLD);
+            sigprocmask(SIG_SETMASK, &prev_all, NULL);
             printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
         } else if (WIFSTOPPED(status)){
             printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
