@@ -450,7 +450,7 @@ void sigchld_handler(int sig)
     pid_t pid;
 
     sigfillset(&mask_all);
-    while ((pid =waitpid(-1, NULL, 0)) > -1){
+    while ((pid =waitpid(-1, NULL, WNOHANG | WUNTRACED)) > -1){
         sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
         kill(pid, SIGCHLD);
         deletejob(jobs, pid);
