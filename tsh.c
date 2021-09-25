@@ -425,12 +425,12 @@ void waitfg(pid_t pid)
     //setSignals
     sigfillset(&mask_all);
 
-    sigprocmask(SIG_BLOCK, &mask_all, &prev_one);
+//    sigprocmask(SIG_BLOCK, &mask_all, &prev_one);
     while(fgpid(jobs) != 0){
-        sleep(1);
-        printf("wait");
+//        sleep(1);
+//        printf("wait");
     }
-    sigprocmask(SIG_SETMASK, &prev_one, NULL);
+//    sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
     return;
 }
