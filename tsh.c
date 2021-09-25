@@ -418,19 +418,8 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-    sigset_t mask_all, prev_one;
-    int process;
-    int status;
-
-    //setSignals
-    sigfillset(&mask_all);
-
-//    sigprocmask(SIG_BLOCK, &mask_all, &prev_one);
     while(fgpid(jobs) != 0){
-//        sleep(1);
-//        printf("wait");
     }
-//    sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
     return;
 }
