@@ -400,9 +400,11 @@ int builtin_cmd(char **argv)
     }
     if(strcmp(argv[0], "jobs") == 0){
         listjobs(jobs);
+        return 1;
     }
     if(strcmp(argv[0], "SLEEP") == 0){
         sleep(strtol(argv[1], NULL, 10));
+        return 1;
     }
     return 0;    }
 
