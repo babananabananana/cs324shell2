@@ -256,8 +256,8 @@ void eval(char *cmdline)
         addjob(jobs, mypid, pid[0], state, cmdline);
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
         //TODO: jobs[this job]
-        jid = pid2jid(mypid);
-
+//        jid = pid2jid(mypid);
+        jid = 1;
         if(!bg){
             //TODO: waitfg(pid[last]);
             int process;
