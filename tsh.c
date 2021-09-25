@@ -255,20 +255,14 @@ void eval(char *cmdline)
         addjob(jobs, mypid, pid[0], state, cmdline);
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
-//        listjobs(jobs);
 
 
         //TODO: jobs[this job]
         jid = pid2jid(mypid);
 
-//        jid = 1;
         if(!bg){
             waitfg(mypid);
-//            listjobs(jobs);
-            printf("waiting on [%d] (%d) %s\n", jid, pid[0], cmdline);
         } else{
-//            listjobs(jobs);
-            printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
 
         }
     }
@@ -441,12 +435,10 @@ void sigchld_handler(int sig)
     int jid;
     sigset_t mask_all, prev_all;
     pid_t pid;
-    printf("delete\n");
 
 
     sigfillset(&mask_all);
     while ((pid = waitpid(-1, NULL, WNOHANG | WUNTRACED)) > 0){
-        printf("deleted [%d] (%d)\n", jid, pid);
         jid = pid2jid(pid);
 
         sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
