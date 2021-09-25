@@ -454,8 +454,9 @@ void sigchld_handler(int sig)
     sigfillset(&mask_all);
     while ((pid =waitpid(-1, NULL, WNOHANG | WUNTRACED)) > -1){
         sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+        jid = pid2jid(pid);
         deletejob(jobs, pid);
-        printf("deleted [%d] (%d) %s\n", jid, pid, cmdline);
+        printf("deleted [%d] (%d)\n", jid, pid);
         kill(pid, SIGCHLD);
         sigprocmask(SIG_SETMASK, &prev_all, NULL);
     }
