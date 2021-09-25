@@ -448,6 +448,7 @@ void waitfg(pid_t pid)
 void sigchld_handler(int sig) 
 {
     int olderrno = errno;
+    int jid;
     sigset_t mask_all, prev_all;
     pid_t pid;
 
