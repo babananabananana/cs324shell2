@@ -254,13 +254,9 @@ void eval(char *cmdline)
         int state = !bg ? FG:BG;
         sigprocmask(SIG_BLOCK, &mask_all, NULL);
         addjob(jobs, mypid, pid[0], state, cmdline);
-        sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
-        sigprocmask(SIG_BLOCK, &mask_all, NULL);
         addjob(jobs, mypid, pid[0], state, cmdline);
-        sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
-        sigprocmask(SIG_BLOCK, &mask_all, NULL);
         addjob(jobs, mypid, pid[0], state, cmdline);
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
