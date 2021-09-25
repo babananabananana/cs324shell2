@@ -398,6 +398,9 @@ int builtin_cmd(char **argv)
     if(strcmp(argv[0],"quit") == 0){
         exit(0);
     }
+    if(strcmp(argv[0], "jobs") == 0){
+        listjobs(jobs);
+    }
     return 0;    }
 
 /* 
@@ -433,15 +436,12 @@ void waitfg(pid_t pid)
 void sigchld_handler(int sig) 
 {
     int olderrno = errno;
-    int jid;
     sigset_t mask_all, prev_all;
     pid_t pid;
 
 
     sigfillset(&mask_all);
     while ((pid = waitpid(-1, NULL, WNOHANG | WUNTRACED)) > 0){
-        jid = pid2jid(pid);
-
         sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
         deletejob(jobs, pid);
         kill(pid, SIGCHLD);
