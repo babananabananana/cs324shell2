@@ -487,10 +487,13 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
+    int olderrno = errno;
+
     pid_t pid;
     pid = fgpid(jobs);
 
     kill((-1*pid), SIGINT);
+    errno = olderrno;
     return;
 }
 
@@ -501,10 +504,18 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
+    int olderrno = errno;
+
     pid_t pid;
     pid = fgpid(jobs);
 
     kill((-1*pid), SIGTSTP);
+    for (int i = 0; i < MAXJOBS; i++) {
+        if (jobs[i].state == 1) {
+            jobs[i].state = 3;
+        }
+    }
+    errno = olderrno;
     return;
 }
 
