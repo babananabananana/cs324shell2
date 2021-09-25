@@ -454,7 +454,7 @@ void sigchld_handler(int sig)
         } else if (WIFSIGNALED(status)) {
             printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
         } else if (WIFSTOPPED(status)){
-            printf("stopped by signal %d\n", WSTOPSIG(status));
+            printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
         } else if (WIFCONTINUED(status)){
             printf("continued\n");
         }
