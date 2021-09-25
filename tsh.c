@@ -258,7 +258,7 @@ void eval(char *cmdline)
         //TODO: jobs[this job]
         jid = pid2jid(mypid);
 
-        printf(getjobjid(1).pid);
+        printf(getjobjid(jobs, 1).pid);
 //        jid = 1;
         if(!bg){
             //TODO: waitfg(pid[last]);
