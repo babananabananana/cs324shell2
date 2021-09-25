@@ -255,7 +255,7 @@ void eval(char *cmdline)
         addjob(jobs, mypid, pid[0], state, cmdline);
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
-        listjobs(jobs);
+//        listjobs(jobs);
 
 
         //TODO: jobs[this job]
@@ -264,10 +264,10 @@ void eval(char *cmdline)
 //        jid = 1;
         if(!bg){
             waitfg(mypid);
-            listjobs(jobs);
+//            listjobs(jobs);
             printf("waiting on [%d] (%d) %s\n", jid, pid[0], cmdline);
         } else{
-            listjobs(jobs);
+//            listjobs(jobs);
             printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
 
         }
