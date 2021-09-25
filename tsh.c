@@ -438,18 +438,39 @@ void sigchld_handler(int sig)
     int olderrno = errno;
     sigset_t mask_all, prev_all;
     pid_t pid;
+    int status;
 
 
     sigfillset(&mask_all);
-    while ((pid = waitpid(-1, NULL, WNOHANG | WUNTRACED)) > 0){
+    while ((pid = waitpid(-1, &status, WNOHANG | WUNTRACED)) > 0){
         sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
         deletejob(jobs, pid);
         kill(pid, SIGCHLD);
         sigprocmask(SIG_SETMASK, &prev_all, NULL);
+
+        if(WIFEXITED(status)){
+            printf("exited, status=%d\n", WEXITSTATUS(status));
+        } else if (WIFSIGNALED(status)) {
+            printf("killed by signal %d\n", WTERMSIG(status));
+        } else if (WIFSTOPPED(status)){
+            printf("stopped by signal %d\n", WSTOPSIG(status));
+        } else if (WIFCONTINUED(status)){
+            printf("continued\n");
+        }
     }
 //    if (errno != ECHILD){
 //
 //    }
+
+//if (WIFEXITED(status)) {
+//                printf("exited, status=%d\n", WEXITSTATUS(status));
+//            } else if (WIFSIGNALED(status)) {
+//                printf("killed by signal %d\n", WTERMSIG(status));
+//            } else if (WIFSTOPPED(status)) {
+//                printf("stopped by signal %d\n", WSTOPSIG(status));
+//            } else if (WIFCONTINUED(status)) {
+//                printf("continued\n");
+//            }
 
     errno = olderrno;
     return;
@@ -462,6 +483,10 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
+    pid_t pid;
+    pid = fgpid(jobs);
+
+    kill((-1*pid), SIGINT);
     return;
 }
 
@@ -472,6 +497,10 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
+    pid_t pid;
+    pid = fgpid(jobs);
+
+    kill((-1*pid), SIGTSTP);
     return;
 }
 
