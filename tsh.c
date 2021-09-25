@@ -233,7 +233,7 @@ void eval(char *cmdline)
                 }
 
                 execv(argv[cmds[i]], &argv[cmds[i]]);
-                printf("Command not found. \n");
+                printf("Command -%s-not found. \n", cmds[i]);
                 exit(1);
             }else{
 
@@ -500,6 +500,7 @@ void sigtstp_handler(int sig)
     pid = fgpid(jobs);
 
     kill((-1*pid), SIGTSTP);
+
     for (int i = 0; i < MAXJOBS; i++) {
         if (jobs[i].state == 1) {
             jobs[i].state = 3;
