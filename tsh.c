@@ -439,10 +439,11 @@ void sigchld_handler(int sig)
     sigset_t mask_all, prev_all;
     pid_t pid;
     int status;
-
+    int jid;
 
     sigfillset(&mask_all);
     while ((pid = waitpid(-1, &status, WNOHANG | WUNTRACED)) > 0){
+        jid = pid2jid(pid);
         sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
         deletejob(jobs, pid);
         kill(pid, SIGCHLD);
@@ -452,7 +453,7 @@ void sigchld_handler(int sig)
 //            printf("exited, status=%d\n", WEXITSTATUS(status));
 //        } else
         if (WIFSIGNALED(status)) {
-            printf("Job[%d] terminated by signal %d\n", WTERMSIG(status));
+            printf("Job[%d] terminated by signal %d\n", jid, WTERMSIG(status));
         } else if (WIFSTOPPED(status)){
             printf("stopped by signal %d\n", WSTOPSIG(status));
         } else if (WIFCONTINUED(status)){
