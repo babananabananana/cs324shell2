@@ -189,13 +189,13 @@ void eval(char *cmdline)
 
     if(!builtin_cmd(argv)){
         int numcmd = parseargs(argv, cmds, stdin_redir, stdout_redir);
-        int p[numcmd -1][2]; //PIPES
+//        int p[numcmd -1][2]; //PIPES
 
         for (int i = 0; i < numcmd; ++i) {
-            if(i != numcmd-1) {
-                //except last
-                pipe(p[i]);
-            } //PIPES
+//            if(i != numcmd-1) {
+//                //except last
+//                pipe(p[i]);
+//            } //PIPES
 
             sigprocmask(SIG_BLOCK, &mask_one, &prev_one);
             mypid = fork();
@@ -207,16 +207,16 @@ void eval(char *cmdline)
                 setpgid(pid[i], pid[0]);
 
                 //*pipe
-                if(i > 0){ //not first
-                    dup2(p[i-1][0], STDIN_FILENO);
-                    close(p[i-1][0]);
-                }
-                if(i != numcmd - 1) {
-                    dup2(p[i][1], STDOUT_FILENO);
-
-                    close(p[i][0]);
-                    close(p[i][1]);
-                }
+//                if(i > 0){ //not first
+//                    dup2(p[i-1][0], STDIN_FILENO);
+//                    close(p[i-1][0]);
+//                }
+//                if(i != numcmd - 1) {
+//                    dup2(p[i][1], STDOUT_FILENO);
+//
+//                    close(p[i][0]);
+//                    close(p[i][1]);
+//                }
                 //*end-pipe
 
                 //FILE STUFF
@@ -240,12 +240,12 @@ void eval(char *cmdline)
 
                 //*pipe
                 //parent closes sending end, saves recieve for next round.
-                if(i != numcmd - 1) {
-                    close(p[i][1]);
-                }
-                if(i>0){
-                    close(p[i-1][0]);
-                }
+//                if(i != numcmd - 1) {
+//                    close(p[i][1]);
+//                }
+//                if(i>0){
+//                    close(p[i-1][0]);
+//                }
                 //*end pipe
 
             }
