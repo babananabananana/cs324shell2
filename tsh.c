@@ -174,6 +174,7 @@ void eval(char *cmdline)
     int stdin_redir[MAXARGS];
     int stdout_redir[MAXARGS];
     int pid[MAXARGS];
+    int mypid;
     int jid;
     FILE* fd[MAXARGS];
     sigset_t mask_all, mask_one, prev_one;
@@ -199,6 +200,7 @@ void eval(char *cmdline)
 
             sigprocmask(SIG_BLOCK, &mask_one, &prev_one);
             pid[i] = fork();
+            mypid = pid[i];
 
             if (pid[i] == 0) {
                 sigprocmask(SIG_SETMASK, &prev_one, NULL);
@@ -251,9 +253,9 @@ void eval(char *cmdline)
         }
         int state = !bg ? FG:BG;
         sigprocmask(SIG_BLOCK, &mask_all, NULL);
-        addjob(jobs, pid[0], pid[0], state, cmdline);
+        addjob(jobs, mypid, pid[0], state, cmdline);
         //TODO: jobs[this job]
-        jid = jobs[0].jid;
+        jid = pid2jid(mypid);
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
         if(!bg){
