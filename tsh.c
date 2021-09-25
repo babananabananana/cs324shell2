@@ -267,7 +267,7 @@ void eval(char *cmdline)
             }
 
         } else{
-//            printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
+            printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
         }
     }
 
