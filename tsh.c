@@ -191,7 +191,7 @@ void eval(char *cmdline)
         int numcmd = parseargs(argv, cmds, stdin_redir, stdout_redir);
 //        int p[numcmd -1][2]; //PIPES
 
-        for (int i = 0; i < numcmd; ++i) {
+//        for (int i = 0; i < numcmd; ++i) {
 //            if(i != numcmd-1) {
 //                //except last
 //                pipe(p[i]);
@@ -249,7 +249,7 @@ void eval(char *cmdline)
                 //*end pipe
 
             }
-        }
+//        }
         int state = !bg ? FG:BG;
         sigprocmask(SIG_BLOCK, &mask_all, NULL);
         addjob(jobs, mypid, pid[0], state, cmdline);
