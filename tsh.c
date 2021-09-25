@@ -466,16 +466,6 @@ void sigchld_handler(int sig)
 //
 //    }
 
-//if (WIFEXITED(status)) {
-//                printf("exited, status=%d\n", WEXITSTATUS(status));
-//            } else if (WIFSIGNALED(status)) {
-//                printf("killed by signal %d\n", WTERMSIG(status));
-//            } else if (WIFSTOPPED(status)) {
-//                printf("stopped by signal %d\n", WSTOPSIG(status));
-//            } else if (WIFCONTINUED(status)) {
-//                printf("continued\n");
-//            }
-
     errno = olderrno;
     return;
 }
