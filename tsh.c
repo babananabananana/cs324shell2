@@ -253,12 +253,6 @@ void eval(char *cmdline)
         int state = !bg ? FG:BG;
         sigprocmask(SIG_BLOCK, &mask_all, NULL);
         addjob(jobs, mypid, pid[0], state, cmdline);
-        addjob(jobs, mypid, pid[0], state, cmdline);
-        addjob(jobs, mypid, pid[0], state, cmdline);
-        addjob(jobs, mypid, pid[0], state, cmdline);
-        addjob(jobs, mypid, pid[0], state, cmdline);
-        addjob(jobs, mypid, pid[0], state, cmdline);
-        addjob(jobs, mypid, pid[0], state, cmdline);
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
 
@@ -269,13 +263,13 @@ void eval(char *cmdline)
 //        jid = 1;
         if(!bg){
             //TODO: waitfg(pid[last]);
-            int process;
-
-            for(int j = 0; j < numcmd; j++){
-                while((process=waitpid(pid[j],&status,0))!=-1){
-//                    printf("Process %d terminated\n",process);
-                }
-            }
+//            int process;
+//
+//            for(int j = 0; j < numcmd; j++){
+//                while((process=waitpid(pid[j],&status,0))!=-1){
+////                    printf("Process %d terminated\n",process);
+//                }
+//            }
 
         } else{
             listjobs(jobs);
@@ -430,9 +424,18 @@ void do_bgfg(char **argv)
 void waitfg(pid_t pid)
 {
     sigset_t mask_all, prev_one;
+    int process;
+    int status;
 
     //setSignals
     sigfillset(&mask_all);
+
+    sigprocmask(SIG_BLOCK, &mask_all, &prev_one);
+    while((process=waitpid(pid,&status,0))!=-1){
+//                    printf("Process %d terminated\n",process);
+    }
+    sigprocmask(SIG_SETMASK, &prev_one, NULL);
+
     return;
 }
 
