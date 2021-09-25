@@ -257,6 +257,10 @@ void eval(char *cmdline)
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
         //TODO: jobs[this job]
         jid = pid2jid(mypid);
+
+        int myjid = getjobjid(1);
+        printf(jobs[myjid].pid);
+
 //        jid = 1;
         if(!bg){
             //TODO: waitfg(pid[last]);
@@ -520,7 +524,7 @@ int addjob(struct job_t *jobs, pid_t pid, pid_t pgid, int state, char *cmdline)
 	    jobs[i].pid = pid;
 	    jobs[i].pgid = pgid;
 	    jobs[i].state = state;
-	    jobs[i].jid = ++nextjid;
+	    jobs[i].jid = nextjid++;
 	    if (nextjid > MAXJOBS)
 		nextjid = 1;
 	    strcpy(jobs[i].cmdline, cmdline);
