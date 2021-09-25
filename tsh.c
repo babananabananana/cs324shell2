@@ -456,10 +456,11 @@ void sigchld_handler(int sig)
 
     sigfillset(&mask_all);
     while ((pid = waitpid(-1, NULL, WNOHANG | WUNTRACED)) > 0){
-        sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
-        jid = pid2jid(pid);
-        deletejob(jobs, pid);
         printf("deleted [%d] (%d)\n", jid, pid);
+        jid = pid2jid(pid);
+
+        sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+        deletejob(jobs, pid);
         kill(pid, SIGCHLD);
         sigprocmask(SIG_SETMASK, &prev_all, NULL);
     }
