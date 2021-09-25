@@ -426,8 +426,9 @@ void waitfg(pid_t pid)
     sigfillset(&mask_all);
 
     sigprocmask(SIG_BLOCK, &mask_all, &prev_one);
-    while((process=waitpid(pid,&status,0))!=-1){
-//                    printf("Process %d terminated\n",process);
+    while(fgpid(jobs) != 0){
+        sleep(1);
+        printf("wait");
     }
     sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
