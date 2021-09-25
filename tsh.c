@@ -252,7 +252,6 @@ void eval(char *cmdline)
         }
         int state = !bg ? FG:BG;
         sigprocmask(SIG_BLOCK, &mask_all, NULL);
-        initjobs(jobs);
         addjob(jobs, mypid, pid[0], state, cmdline);
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
@@ -424,6 +423,11 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
+    sigset_t mask_all, prev_one;
+
+    //setSignals
+    sigfillset(&mask_all);
+    sigemptyset(&mask_one);
     return;
 }
 
