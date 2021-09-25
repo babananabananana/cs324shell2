@@ -427,7 +427,6 @@ void waitfg(pid_t pid)
 
     //setSignals
     sigfillset(&mask_all);
-    sigemptyset(&mask_one);
     return;
 }
 
