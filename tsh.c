@@ -402,7 +402,7 @@ int builtin_cmd(char **argv)
         listjobs(jobs);
     }
     if(strcmp(argv[0], "SLEEP") == 0){
-        sleep(argv[1]);
+        sleep(strtol(argv[1], NULL, 10));
     }
     return 0;    }
 
