@@ -199,12 +199,12 @@ void eval(char *cmdline)
 
             sigprocmask(SIG_BLOCK, &mask_one, &prev_one);
             mypid = fork();
-            pid[i] = mypid;
+            pid[0] = mypid; //pid[i]
 
-            if (pid[i] == 0) {
+            if (mypid == 0) {
                 sigprocmask(SIG_SETMASK, &prev_one, NULL);
                 //am child
-                setpgid(pid[i], pid[0]);
+                setpgid(mypid, pid[0]);
 
                 //*pipe
 //                if(i > 0){ //not first
@@ -220,20 +220,20 @@ void eval(char *cmdline)
                 //*end-pipe
 
                 //FILE STUFF
-                if (stdin_redir[i] != -1) {
-                    fd[2 * i] = fopen(argv[stdin_redir[i]], "r");
-                    int inFileNum = fileno(fd[2 * i]);
-                    dup2( inFileNum, 0);
-                }
-                if (stdout_redir[i] != -1) {
-                    int fileindex = ((2 * i) + 1);
-                    fd[fileindex] = fopen(argv[stdout_redir[i]], "w");
-                    int outFileNum = fileno(fd[fileindex]);
-                    dup2(outFileNum, 1);
-                }
+//                if (stdin_redir[i] != -1) {
+//                    fd[2 * i] = fopen(argv[stdin_redir[i]], "r");
+//                    int inFileNum = fileno(fd[2 * i]);
+//                    dup2( inFileNum, 0);
+//                }
+//                if (stdout_redir[i] != -1) {
+//                    int fileindex = ((2 * i) + 1);
+//                    fd[fileindex] = fopen(argv[stdout_redir[i]], "w");
+//                    int outFileNum = fileno(fd[fileindex]);
+//                    dup2(outFileNum, 1);
+//                }
 
-                execv(argv[cmds[i]], &argv[cmds[i]]);
-                printf("Command -%s-not found. \n", argv[cmds[i]]);
+                execv(argv[0], &argv[0]); //argv[cmds[i]];
+                printf("Command -%s-not found. \n", argv[0]); //cmds[i];
                 exit(1);
             }else{
 
