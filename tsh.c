@@ -444,18 +444,16 @@ void sigchld_handler(int sig)
     sigfillset(&mask_all);
     while ((pid = waitpid(-1, &status, WNOHANG | WUNTRACED)) > 0){
         jid = pid2jid(pid);
-        sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
-        deletejob(jobs, pid);
-        kill(pid, SIGCHLD);
-        sigprocmask(SIG_SETMASK, &prev_all, NULL);
 
         if(WIFEXITED(status)){
-//            printf("exited, status=%d\n", WEXITSTATUS(status));
+            sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+            deletejob(jobs, pid);
+            kill(pid, SIGCHLD);
+            sigprocmask(SIG_SETMASK, &prev_all, NULL);
         } else if (WIFSIGNALED(status)) {
             printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
         } else if (WIFSTOPPED(status)){
             printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
-            listjobs(jobs);
         } else if (WIFCONTINUED(status)){
             printf("continued\n");
         }
