@@ -183,7 +183,6 @@ void eval(char *cmdline)
     sigfillset(&mask_all);
     sigemptyset(&mask_one);
     sigaddset(&mask_one, SIGCHLD);
-    initjobs(jobs);
     //
 
     bg = parseline(cmdline, argv); //parseline returns true if its a background
@@ -253,6 +252,7 @@ void eval(char *cmdline)
         }
         int state = !bg ? FG:BG;
         sigprocmask(SIG_BLOCK, &mask_all, NULL);
+        initjobs(jobs);
         addjob(jobs, mypid, pid[0], state, cmdline);
         sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
