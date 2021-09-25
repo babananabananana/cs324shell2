@@ -436,12 +436,10 @@ void sigchld_handler(int sig)
     int jid;
     sigset_t mask_all, prev_all;
     pid_t pid;
-    printf("delete\n");
 
 
     sigfillset(&mask_all);
     while ((pid = waitpid(-1, NULL, WNOHANG | WUNTRACED)) > 0){
-        printf("deleted [%d] (%d)\n", jid, pid);
         jid = pid2jid(pid);
 
         sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
