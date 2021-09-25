@@ -264,9 +264,11 @@ void eval(char *cmdline)
 //        jid = 1;
         if(!bg){
             waitfg(mypid);
-            printf("waiting on [%d] (%d) %s\n", jid, pid[0], cmdline);
+            listjobs(jobs);
+//            printf("waiting on [%d] (%d) %s\n", jid, pid[0], cmdline);
         } else{
-            printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
+            listjobs(jobs);
+//            printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
 
         }
     }
