@@ -503,6 +503,7 @@ void sigtstp_handler(int sig)
     pid = fgpid(jobs);
 
     kill((-1*pid), SIGTSTP);
+    sleep(1);
 
     for (int i = 0; i < MAXJOBS; i++) {
         if (jobs[i].state == 1) {
