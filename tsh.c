@@ -452,7 +452,7 @@ void sigchld_handler(int sig)
     int jid;
     sigset_t mask_all, prev_all;
     pid_t pid;
-    printf("delete\n", jid, pid);
+    printf("delete\n");
 
 
     sigfillset(&mask_all);
