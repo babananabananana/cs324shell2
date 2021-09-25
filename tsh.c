@@ -199,8 +199,8 @@ void eval(char *cmdline)
             } //PIPES
 
             sigprocmask(SIG_BLOCK, &mask_one, &prev_one);
-            pid[i] = fork();
-            mypid = pid[i];
+            mypid = fork();
+            pid[i] = mypid;
 
             if (pid[i] == 0) {
                 sigprocmask(SIG_SETMASK, &prev_one, NULL);
