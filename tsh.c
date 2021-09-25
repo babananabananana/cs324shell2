@@ -270,8 +270,8 @@ void eval(char *cmdline)
             }
 
         } else{
+            listjobs(jobs);
             printf("[%d] (%d) %s\n", jid, pid[0], cmdline);
-//            printf("%d", getjobjid(jobs, 1)->pid);
 
         }
     }
