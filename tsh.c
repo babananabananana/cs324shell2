@@ -233,7 +233,7 @@ void eval(char *cmdline)
                 }
 
                 execv(argv[cmds[i]], &argv[cmds[i]]);
-                printf("Command -%s-not found. \n", cmds[i]);
+                printf("Command -%s-not found. \n", argv[cmds[i]]);
                 exit(1);
             }else{
 
