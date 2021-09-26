@@ -417,30 +417,40 @@ void do_bgfg(char **argv)
     pid_t pid;
     struct job_t* myJob;
     char* cmd = argv[0];
+    int fgORbg;
 
     //error check
     if (strlen(argv[1]) < 1){
         printf("%s command requires PID or %%job id argument\n", cmd);
+    } else {
+        //if not num
     }
 
+    fgORbg = strcmp(argv[0], "fg") ? 1 : 2;
 
-
-    if(strcmp(argv[0],"fg") == 0) {
-        isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
-        int i = strtol(argv[1], NULL, 10);             //run twice, 1st time gets past the %, 2nd gets the int.
-        if (isJid) {
-            printf("%d\n", i);
-            myJob = getjobjid(jobs, i); //TODO: need to remove %?
-            myJob->state = 1;
-            pid = myJob->pid;
-        } else{
-            myJob = getjobpid(jobs, i);
-            myJob->state = 1;
-            pid = myJob->pid;
+    isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
+    int i = strtol(argv[1], NULL, 10);             //run twice, 1st time gets past the %, 2nd gets the int.
+    if (isJid) {
+        printf("%d\n", i);
+        myJob = getjobjid(jobs, i); //TODO: need to remove %?
+        //if wrong
+        myJob->state = fgORbg;
+        if(strcmp(myJob->state, "ST") == 0){
+            kill(pid, SIGCONT);
         }
-    }else {
-        //TODO: send to bg?
+        pid = myJob->pid;
+    } else{
+        myJob = getjobpid(jobs, i);
+        //if wrong
+        myJob->state = fgORbg;
+        if(strcmp(myJob->state, "ST") == 0){
+            kill(pid, SIGCONT);
+        }
+        pid = myJob->pid;
     }
+
+
+
     waitfg(pid);
     return;
 }
