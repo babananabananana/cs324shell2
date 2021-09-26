@@ -420,13 +420,13 @@ void do_bgfg(char **argv)
 
     //error check
     if (strlen(argv[1]) < 1){
-        printf("%s command requires PID or %%job id argument\n", cmd)
+        printf("%s command requires PID or %%job id argument\n", cmd);
     }
 
 
 
-    if(argv[0] == fg) {
-        isJid = (strstr(argv, "%") == NULL) ? 0 : 1;
+    if(strcmp(argv[0],"fg") == 0) {
+        isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
         if (isJid) {
             int i = strtol(strtol(argv[1], NULL, 10), NULL, 10); //run twice, 1st time gets past the %, 2nd gets the int.
             printf("%d\n", i);
