@@ -411,6 +411,7 @@ int builtin_cmd(char **argv)
         return 1;
     }
     if(strcmp(argv[0], "bg") == 0){
+        printf("spot -1 \n");
         do_bgfg(argv);
         return 1;
     }
