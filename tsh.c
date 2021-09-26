@@ -427,14 +427,14 @@ void do_bgfg(char **argv)
 
     if(strcmp(argv[0],"fg") == 0) {
         isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
+        int i = strtol(argv[1], NULL, 10);             //run twice, 1st time gets past the %, 2nd gets the int.
         if (isJid) {
-            int i = strtol(strtol(argv[1], NULL, 10), NULL, 10); //run twice, 1st time gets past the %, 2nd gets the int.
             printf("%d\n", i);
-            myJob = getjobjid(jobs, argv[1]); //TODO: need to remove %?
+            myJob = getjobjid(jobs, i); //TODO: need to remove %?
             myJob->state = 1;
             pid = myJob->pid;
         } else{
-            myJob = getjobpid(jobs, argv[1]);
+            myJob = getjobpid(jobs, i);
             myJob->state = 1;
             pid = myJob->pid;
         }
