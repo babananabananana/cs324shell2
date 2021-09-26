@@ -411,7 +411,6 @@ int builtin_cmd(char **argv)
         return 1;
     }
     if(strcmp(argv[0], "bg") == 0){
-        printf("spot -1 \n");
         do_bgfg(argv);
         return 1;
     }
@@ -422,7 +421,6 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
-    printf("spot0\n");
     int isJid;
     pid_t pid;
     int jid;
@@ -431,7 +429,6 @@ void do_bgfg(char **argv)
     int fgORbg;
     char* cmdline;
 
-    printf("spot 1\n");
     //error check
     if (strlen(argv[1]) < 1){
         printf("%s command requires PID or %%job id argument\n", cmd);
@@ -439,12 +436,15 @@ void do_bgfg(char **argv)
         //if not num
     }
 
-    printf("spot2\n");
+    char* amt = argv[1];
+        printf("spot2\n");
     fgORbg = strcmp(argv[0], "fg") ? 1 : 2;
-    printf("i am here");
+        printf("i am here");
 
     isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
-    int i = strtol(argv[1], NULL, 10);             //run twice, 1st time gets past the %, 2nd gets the int.
+    if(isJid){amts = argv[0]++}
+    int i = strtol(amts, NULL, 10);
+    printf("spot3\n");
     if (isJid) {
         printf("%d\n", i);
         myJob = getjobjid(jobs, i); //TODO: need to remove %?
