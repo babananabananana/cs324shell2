@@ -413,6 +413,35 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
+    int isJid;
+    pid_t pid;
+    struct job_t* myJob;
+    char* cmd = argv[0];
+
+    //error check
+    if (strlen(argv[1]) < 1{
+        printf("%s command requires PID or %%job id argument\n", cmd)
+    }
+
+
+
+    if(argv[0] == fg) {
+        isJid = (strstr(argv, "%") == NULL) ? 0 : 1;
+        if (isJid) {
+            int i = strtol(strtol(argv[1])); //run twice, 1st time gets past the %, 2nd gets the int.
+            printf("%d\n", i);
+            myJob = getjobjid(jobs, argv[1]); //TODO: need to remove %?
+            myJob->state = 1;
+            pid = myJob->pid;
+        } else{
+            myJob = getjobpid(argv[1]);
+            myJob->state = 1;
+            pid = myJob->pid;
+        }
+    }else {
+        //TODO: send to bg?
+    }
+    waitfg(pid)
     return;
 }
 
