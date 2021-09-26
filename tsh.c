@@ -415,6 +415,7 @@ void do_bgfg(char **argv)
 {
     int isJid;
     pid_t pid;
+    int jid;
     struct job_t* myJob;
     char* cmd = argv[0];
     int fgORbg;
@@ -451,6 +452,7 @@ void do_bgfg(char **argv)
     }
 
     if(fgORbg == BG){
+        jid = myJob->jid;
         cmdline = myJob->cmdline;
         printf("[%d] (%d) %s\n", jid, pid, cmdline);
     }
