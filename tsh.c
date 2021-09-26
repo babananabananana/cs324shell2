@@ -406,6 +406,12 @@ int builtin_cmd(char **argv)
         sleep(strtol(argv[1], NULL, 10));
         return 1;
     }
+    if(strcmp(argv[0], "fg") == 0){
+        do_bgfg(argv);
+    }
+    if(strcmp(argv[0], "bg") == 0){
+        do_bgfg(argv);
+    }
     return 0;    }
 
 /* 
@@ -429,6 +435,7 @@ void do_bgfg(char **argv)
     }
 
     fgORbg = strcmp(argv[0], "fg") ? 1 : 2;
+    printf("i am here");
 
     isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
     int i = strtol(argv[1], NULL, 10);             //run twice, 1st time gets past the %, 2nd gets the int.
