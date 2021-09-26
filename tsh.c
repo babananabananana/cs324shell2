@@ -421,6 +421,7 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
+    printf("spot0\n");
     int isJid;
     pid_t pid;
     int jid;
