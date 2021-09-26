@@ -428,7 +428,7 @@ void do_bgfg(char **argv)
     if(argv[0] == fg) {
         isJid = (strstr(argv, "%") == NULL) ? 0 : 1;
         if (isJid) {
-            int i = strtol(strtol(argv[1])); //run twice, 1st time gets past the %, 2nd gets the int.
+            int i = strtol(strtol(argv[1], NULL, 10), NULL, 10); //run twice, 1st time gets past the %, 2nd gets the int.
             printf("%d\n", i);
             myJob = getjobjid(jobs, argv[1]); //TODO: need to remove %?
             myJob->state = 1;
