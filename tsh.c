@@ -418,6 +418,7 @@ void do_bgfg(char **argv)
     struct job_t* myJob;
     char* cmd = argv[0];
     int fgORbg;
+    char* cmdline;
 
     //error check
     if (strlen(argv[1]) < 1){
@@ -447,6 +448,11 @@ void do_bgfg(char **argv)
             kill(pid, SIGCONT);
         }
         pid = myJob->pid;
+    }
+
+    if(fgORbg == BG){
+        cmdline = myJob->cmdline;
+        printf("[%d] (%d) %s\n", jid, pid, cmdline);
     }
 
 
