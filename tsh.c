@@ -435,7 +435,7 @@ void do_bgfg(char **argv)
         myJob = getjobjid(jobs, i); //TODO: need to remove %?
         //if wrong
         myJob->state = fgORbg;
-        if(strcmp(myJob->state, "ST") == 0){
+        if(myJob->state == 3){
             kill(pid, SIGCONT);
         }
         pid = myJob->pid;
@@ -443,7 +443,7 @@ void do_bgfg(char **argv)
         myJob = getjobpid(jobs, i);
         //if wrong
         myJob->state = fgORbg;
-        if(strcmp(myJob->state, "ST") == 0){
+        if(myJob->state == 3){
             kill(pid, SIGCONT);
         }
         pid = myJob->pid;
