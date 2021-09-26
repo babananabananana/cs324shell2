@@ -443,7 +443,7 @@ void do_bgfg(char **argv)
 
     isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
     if(isJid){amts = argv[0]++}
-    int i = strtol(amts, NULL, 10);
+    int i = strtol(amt, NULL, 10);
     printf("spot3\n");
     if (isJid) {
         printf("%d\n", i);
