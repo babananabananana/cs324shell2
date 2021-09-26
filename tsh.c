@@ -434,14 +434,14 @@ void do_bgfg(char **argv)
             myJob->state = 1;
             pid = myJob->pid;
         } else{
-            myJob = getjobpid(argv[1]);
+            myJob = getjobpid(jobs, argv[1]);
             myJob->state = 1;
             pid = myJob->pid;
         }
     }else {
         //TODO: send to bg?
     }
-    waitfg(pid)
+    waitfg(pid);
     return;
 }
 
