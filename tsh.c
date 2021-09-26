@@ -442,7 +442,7 @@ void do_bgfg(char **argv)
         printf("i am here");
 
     isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
-    if(isJid){amts = argv[0]++}
+    if(isJid){amt = argv[0]++;}
     int i = strtol(amt, NULL, 10);
     printf("spot3\n");
     if (isJid) {
