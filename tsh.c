@@ -427,6 +427,7 @@ void do_bgfg(char **argv)
     int fgORbg;
     char* cmdline;
 
+    printf("spot 1\n");
     //error check
     if (strlen(argv[1]) < 1){
         printf("%s command requires PID or %%job id argument\n", cmd);
@@ -434,6 +435,7 @@ void do_bgfg(char **argv)
         //if not num
     }
 
+    printf("spot2\n");
     fgORbg = strcmp(argv[0], "fg") ? 1 : 2;
     printf("i am here");
 
