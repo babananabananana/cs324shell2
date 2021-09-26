@@ -408,9 +408,11 @@ int builtin_cmd(char **argv)
     }
     if(strcmp(argv[0], "fg") == 0){
         do_bgfg(argv);
+        return 1;
     }
     if(strcmp(argv[0], "bg") == 0){
         do_bgfg(argv);
+        return 1;
     }
     return 0;    }
 
