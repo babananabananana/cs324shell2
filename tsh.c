@@ -233,7 +233,7 @@ void eval(char *cmdline)
                 }
 
                 execv(argv[cmds[i]], &argv[cmds[i]]);
-//                printf("Command -%s-not found. \n", argv[cmds[i]]);
+                printf("Command -%s-not found. \n", argv[cmds[i]]);
                 exit(1);
             }else{
 
@@ -430,7 +430,7 @@ void do_bgfg(char **argv)
     char* cmdline;
 
     //error check
-    if ((sizeof (argv)/sizeof argv[0])< 2){
+    if ((sizeof(argv)/sizeof(argv[0])< 2){
         printf("%s command requires PID or %%job id argument\n", cmd);
         return;
     }
