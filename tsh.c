@@ -543,9 +543,9 @@ void sigchld_handler(int sig)
             printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
         } else if (WIFSTOPPED(status)){
 //            for (int i = 0; i < MAXJOBS; ++i) {
-//                if(jobs[jid].state == 2) {
-//                    jobs[jid].state = 3;
-//                }
+                if(jobs[jid].state == 1) {
+                    jobs[jid].state = 3;
+                }
 //            }
             printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
         } else if (WIFCONTINUED(status)){
