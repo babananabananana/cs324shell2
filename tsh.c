@@ -487,7 +487,7 @@ void do_bgfg(char **argv)
         printf("[%d] (%d) %s\n", jid, pid, cmdline);
     }
     printf("%d here2\n", pid);
-    fflush(stdout)
+    fflush(stdout);
     waitfg(pid);
     return;
 }
