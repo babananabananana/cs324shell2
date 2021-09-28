@@ -439,11 +439,13 @@ void do_bgfg(char **argv)
     char* amt = argv[1];
         printf("spot2\n");
     fgORbg = strcmp(argv[0], "fg") ? 1 : 2;
-        printf("i am here");
+        printf("i am here\n");
 
     isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
     if(isJid){amt = argv[0]++;}
+    printf("amt: %s\n", amt);
     int i = strtol(amt, NULL, 10);
+
     printf("spot3\n");
     if (isJid) {
         printf("%d\n", i);
