@@ -437,10 +437,11 @@ void do_bgfg(char **argv)
         printf("%s command requires PID or %%job id argument\n", cmd);
     } else {
         //if not num
-        if(isdigit(strtol(argv[1]), NULL, 10)){}
-        else if(isdigit(strtol(argv[1]+1), NULL, 10) && (argv[1][0] == '%')){}
+        if(isdigit(argv[1]){}
+        else if(isdigit(argv[1]+1) && (argv[1][0] == '%')){}
         else{
-        printf("%s command requires PID or %%job id argument\n", cmd)}
+        printf("%s command requires PID or %%job id argument\n", cmd);
+        }
     }
 
     char* amt = argv[1];
