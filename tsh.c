@@ -439,13 +439,13 @@ void do_bgfg(char **argv)
         int i = 0;
         while (argv[i] != 0){
             if (!isdigit(argv[i])){
-                printf("%s command requires PID or %%job id argument\n", cmd);
+                printf("%s: argument must be a PID or %%job id\n", cmd);
                 return;
             }
             i++;
         }
     }else{
-        printf("%s command requires PID or %%job id argument\n", cmd);
+        printf("%s: argument must be a PID or %%job id\n", cmd);
         return;
     }
 
