@@ -430,24 +430,24 @@ void do_bgfg(char **argv)
     char* cmdline;
 
     //error check
-//    if (!argv[1]){
-//        printf("%s command requires PID or %%job id argument\n", cmd);
-//        return;
-//    }
-//
-//    if(isdigit(argv[1][0]) || argv[1][0] == '%'){
-//        int i = 0;
-//        while (argv[i] != 0){
-//            if (!isdigit(argv[i])){
-//                printf("%s: argument must be a PID or %%job id\n", cmd);
-//                return;
-//            }
-//            i++;
-//        }
-//    }else{
-//        printf("%s: argument must be a PID or %%job id\n", cmd);
-//        return;
-//    }
+    if (!argv[1]){
+        printf("%s command requires PID or %%job id argument\n", cmd);
+        return;
+    }
+
+    if(isdigit(argv[1][0]) || argv[1][0] == '%'){
+        int i = 0;
+        while (argv[i] != 0){
+            if (!isdigit(argv[i])){
+                printf("%s: argument must be a PID or %%job id\n", cmd);
+                return;
+            }
+            i++;
+        }
+    }else{
+        printf("%s: argument must be a PID or %%job id\n", cmd);
+        return;
+    }
 
 //    printf("here-1\n");
     char* amt = argv[1];
