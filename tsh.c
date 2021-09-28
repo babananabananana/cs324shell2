@@ -437,7 +437,7 @@ void do_bgfg(char **argv)
     }
 
     char* amt = argv[1];
-    fgORbg = strcmp(argv[0], "fg") ? 1 : 2;
+    fgORbg = (strcmp(argv[0], "fg")==0) ? 1 : 2;
 
     isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
     if(isJid){amt = (argv[1]+1);}
