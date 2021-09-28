@@ -429,8 +429,6 @@ void do_bgfg(char **argv)
     int fgORbg;
     char* cmdline;
 
-    return;
-
     //error check
     if (strlen(argv[1]) < 1){
         printf("%s command requires PID or %%job id argument\n", cmd);
@@ -465,7 +463,7 @@ void do_bgfg(char **argv)
         pid = myJob->pid;
 
         if(myJob->state == 3){
-            kill(pid, SIGCONT);
+            kill(-1*pid, SIGCONT);
         }
         myJob->state = fgORbg;
 //        printf("here1\n");
@@ -479,7 +477,7 @@ void do_bgfg(char **argv)
 
         //if wrong
         if(myJob->state == 3){
-            kill(pid, SIGCONT);
+            kill(-1*pid, SIGCONT);
         }
         myJob->state = fgORbg;
     }
