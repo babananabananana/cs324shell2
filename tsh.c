@@ -474,8 +474,7 @@ void do_bgfg(char **argv)
 //        printf("here1\n");
     } else{
         pid = i;
-        myJob = getjobpid(jobs, pid);
-        if(myJob == NULL){
+        if (myJob = getjobpid(jobs, pid) == NULL){
             printf("%d No such process\n", pid);
             return;
         }
