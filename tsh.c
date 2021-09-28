@@ -428,9 +428,7 @@ void do_bgfg(char **argv)
     char* cmd = argv[0];
     int fgORbg;
     char* cmdline;
-
-    waitfg(pid);
-
+    
 
     //error check
     if (strlen(argv[1]) < 1){
