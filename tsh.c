@@ -542,6 +542,7 @@ void sigchld_handler(int sig)
             sigprocmask(SIG_SETMASK, &prev_all, NULL);
             printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
         } else if (WIFSTOPPED(status)){
+            printf("hello there\n");
             kill(pid, SIGTSTP);
             if(jobs[jid].state == 1) {
                 jobs[jid].state = 3;
