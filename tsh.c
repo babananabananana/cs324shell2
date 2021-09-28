@@ -544,7 +544,7 @@ void sigchld_handler(int sig)
         } else if (WIFSTOPPED(status)){
             printf("hello there\n");
             listjobs(jobs);
-            if(jobs[jid].state == 1) {
+            if(jobs[jid].state == FG) {
                 jobs[jid].state = 3;
                 printf("job {%d} turned off", jid);
             }
