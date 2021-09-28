@@ -429,6 +429,9 @@ void do_bgfg(char **argv)
     int fgORbg;
     char* cmdline;
 
+    fflush(stdout);
+
+
     //error check
     if (strlen(argv[1]) < 1){
         printf("%s command requires PID or %%job id argument\n", cmd);
