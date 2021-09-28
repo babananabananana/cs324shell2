@@ -407,7 +407,6 @@ int builtin_cmd(char **argv)
         return 1;
     }
     if(strcmp(argv[0], "fg") == 0){
-        printf("here");
         do_bgfg(argv);
         return 1;
     }
@@ -475,15 +474,11 @@ void do_bgfg(char **argv)
 //        printf("here1\n");
     } else{
         pid = i;
-                printf("%d, here0\n", i);
-
         myJob = getjobpid(jobs, pid);
         if(!myJob){
             printf("%d No such process\n", pid);
             return;
         }
-                printf("%d, here1\n", i);
-
 
         //if wrong
         if(myJob->state == 3){
