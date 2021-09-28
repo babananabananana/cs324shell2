@@ -429,8 +429,7 @@ void do_bgfg(char **argv)
     int fgORbg;
     char* cmdline;
 
-    fflush(stdout);
-
+    return;
 
     //error check
     if (strlen(argv[1]) < 1){
@@ -489,8 +488,7 @@ void do_bgfg(char **argv)
         cmdline = myJob->cmdline;
         printf("[%d] (%d) %s\n", jid, pid, cmdline);
     }
-    printf("%d here2\n", pid);
-    fflush(stdout);
+//    printf("%d here2\n", pid);
     waitfg(pid);
     return;
 }
