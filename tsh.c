@@ -473,8 +473,11 @@ void do_bgfg(char **argv)
         myJob->state = fgORbg;
 //        printf("here1\n");
     } else{
+        printf("%d, here0\n", i);
         pid = i;
         myJob = getjobpid(jobs, pid);
+        printf("%d, here1\n", i);
+
         if(!myJob){
             printf("%d No such process\n", pid);
             return;
