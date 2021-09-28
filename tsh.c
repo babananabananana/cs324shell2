@@ -463,7 +463,7 @@ void do_bgfg(char **argv)
         myJob->state = fgORbg;
     }
 
-    printf("hi, %d: %d, (%d)\n", fgORbg, BG, pid);
+//    printf("hi, %d: %d, (%d)\n", fgORbg, BG, pid);
 
     if(fgORbg == BG){
         jid = myJob->jid;
