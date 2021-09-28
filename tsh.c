@@ -435,8 +435,8 @@ void do_bgfg(char **argv)
         return;
     }
 
-    if(isdigit(argv[1][0]) || argv[1][0] == "%"){
-        int i = 0;
+    if(isdigit(argv[1][0]) || argv[1][0] == '%'){
+        int i = 1;
         while (argv[i] != 0){
             if (!isdigit(argv[i])){
                 printf("%s: argument must be a PID or %%job id\n", cmd);
