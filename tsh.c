@@ -430,10 +430,10 @@ void do_bgfg(char **argv)
     char* cmdline;
 
     //error check
-    if (!argv[1]){
-        printf("%s command requires PID or %%job id argument\n", cmd);
-        return;
-    }
+//    if (!argv[1]){
+//        printf("%s command requires PID or %%job id argument\n", cmd);
+//        return;
+//    }
 
     if(isdigit(argv[1][0]) || argv[1][0] == '%'){
         int i = 0;
