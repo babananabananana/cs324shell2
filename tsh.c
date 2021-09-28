@@ -545,8 +545,8 @@ void sigchld_handler(int sig)
             printf("hello there\n List::");
             listjobs(jobs);
             printf("list end \n");
-            if(jobs[jid].state == FG) {
-                jobs[jid].state = ST;
+            if(jobs[jid-1].state == FG) {
+                jobs[jid-1].state = ST;
                 printf("job {%d} turned off", jid);
             }
 //            kill(-1*pid, SIGTSTP);
