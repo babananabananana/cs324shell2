@@ -407,7 +407,6 @@ int builtin_cmd(char **argv)
         return 1;
     }
     if(strcmp(argv[0], "fg") == 0){
-        printf("built");
         do_bgfg(argv);
         return 1;
     }
@@ -429,7 +428,6 @@ void do_bgfg(char **argv)
     char* cmd = argv[0];
     int fgORbg;
     char* cmdline;
-    printf("hi");
 
     //error check
     if (strlen(argv[1]) < 1){
@@ -446,7 +444,7 @@ void do_bgfg(char **argv)
 //        printf("%s command requires PID or %%job id argument\n", cmd);
 //        }
     }
-    printf("here-1\n");
+//    printf("here-1\n");
     char* amt = argv[1];
     fgORbg = (strcmp(argv[0], "fg")==0) ? 1 : 2;
 
@@ -455,7 +453,7 @@ void do_bgfg(char **argv)
     int i = strtol(amt, NULL, 10);
 
     if (isJid) {
-        printf("%d, here0\n", i);
+//        printf("%d, here0\n", i);
         myJob = getjobjid(jobs, i);
         if(!myJob){
             printf("%d No such job\n",jid);
@@ -468,7 +466,7 @@ void do_bgfg(char **argv)
             kill(pid, SIGCONT);
         }
         myJob->state = fgORbg;
-        printf("here1\n");
+//        printf("here1\n");
     } else{
         pid = i;
         myJob = getjobpid(jobs, pid);
@@ -488,7 +486,7 @@ void do_bgfg(char **argv)
         cmdline = myJob->cmdline;
         printf("[%d] (%d) %s\n", jid, pid, cmdline);
     }
-    printf("%d here2\n", pid);
+//    printf("%d here2\n", pid);
     waitfg(pid);
     return;
 }
@@ -499,6 +497,8 @@ void do_bgfg(char **argv)
 void waitfg(pid_t pid)
 {
     while(fgpid(jobs) != 0){
+        sleep(1);
+        printf("waiting");
     }
 
     return;
