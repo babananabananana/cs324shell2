@@ -428,7 +428,6 @@ void do_bgfg(char **argv)
     char* cmd = argv[0];
     int fgORbg;
     char* cmdline;
-    int idIsValid = 1;
 
     //error check
     if (strlen(argv[1]) < 1){
@@ -438,7 +437,7 @@ void do_bgfg(char **argv)
 
     if(isdigit(argv[1][0]) || argv[1][0] == '%'){
         int i = 0;
-        while (argv[i] != '\0'){
+        while (argv[i] != 0){
             if (!isdigit(argv[i])){
                 printf("%s command requires PID or %%job id argument\n", cmd);
                 return;
