@@ -486,7 +486,8 @@ void do_bgfg(char **argv)
         cmdline = myJob->cmdline;
         printf("[%d] (%d) %s\n", jid, pid, cmdline);
     }
-//    printf("%d here2\n", pid);
+    printf("%d here2\n", pid);
+    fflush(stdout)
     waitfg(pid);
     return;
 }
