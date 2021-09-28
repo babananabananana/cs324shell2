@@ -452,6 +452,7 @@ void do_bgfg(char **argv)
     int i = strtol(amt, NULL, 10);
 
     if (isJid) {
+        printf("%d, here0\n", i);
         myJob = getjobjid(jobs, i);
         if(!myJob){
             printf("%d No such job\n",jid);
