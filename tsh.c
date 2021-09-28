@@ -452,6 +452,7 @@ void do_bgfg(char **argv)
             kill(pid, SIGCONT);
         }
         myJob->state = fgORbg;
+        printf("hi, (%s)\n", pid);
     } else{
         myJob = getjobpid(jobs, i);
         pid = myJob->pid;
