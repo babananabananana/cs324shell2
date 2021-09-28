@@ -451,19 +451,21 @@ void do_bgfg(char **argv)
         printf("%d\n", i);
         myJob = getjobjid(jobs, i); //TODO: need to remove %?
         //if wrong
+        pid = myJob->pid;
+
         if(myJob->state == 3){
             kill(pid, SIGCONT);
         }
         myJob->state = fgORbg;
-        pid = myJob->pid;
     } else{
         myJob = getjobpid(jobs, i);
+        pid = myJob->pid;
+
         //if wrong
         if(myJob->state == 3){
             kill(pid, SIGCONT);
         }
         myJob->state = fgORbg;
-        pid = myJob->pid;
     }
 
     if(fgORbg == BG){
