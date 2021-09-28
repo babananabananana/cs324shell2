@@ -544,10 +544,10 @@ void sigchld_handler(int sig)
         } else if (WIFSTOPPED(status)){
             printf("hello there\n");
             listjobs(jobs);
-//            if(jobs[jid].state == FG) {
+            if(jobs[jid].state == FG) {
                 jobs[jid].state = ST;
                 printf("job {%d} turned off", jid);
-//            }
+            }
 //            kill(-1*pid, SIGTSTP);
             printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
             listjobs(jobs);
@@ -594,10 +594,10 @@ void sigtstp_handler(int sig)
 
     kill((-1*pid), SIGTSTP);
     sleep(1);
-    printf("i'm here");
+    printf("i'm here\n");
     for (int i = 0; i < MAXJOBS; i++) {
         if (jobs[i].state == 1) {
-            printf("job {%d} stopped", i);
+            printf("job {%d} stopped\n", i);
             jobs[i].state = 3;
         }
     }
