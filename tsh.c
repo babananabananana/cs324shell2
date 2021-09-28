@@ -430,7 +430,7 @@ void do_bgfg(char **argv)
     char* cmdline;
 
     //error check
-    if ((sizeof(argv)/sizeof(argv[0])) < 2){
+    if (!argv[1]){
         printf("%s command requires PID or %%job id argument\n", cmd);
         return;
     }
