@@ -452,7 +452,10 @@ void do_bgfg(char **argv)
     int i = strtol(amt, NULL, 10);
 
     if (isJid) {
-        myJob = getjobjid(jobs, i); //TODO: need to remove %?
+        myJob = getjobjid(jobs, i);
+        if(!myJob){
+            printf("%d No such job\n",jid);
+        }
         //if wrong
         pid = myJob->pid;
 
@@ -461,9 +464,12 @@ void do_bgfg(char **argv)
         }
         myJob->state = fgORbg;
     } else{
-        myJob = getjobpid(jobs, i);
-        pid = myJob->pid;
-
+        pid = i;
+        myJob = getjobpid(jobs, pid);
+        if(!myJob){
+            printf("%d No such process\n", pid);
+        }
+        
         //if wrong
         if(myJob->state == 3){
             kill(pid, SIGCONT);
