@@ -437,18 +437,13 @@ void do_bgfg(char **argv)
     }
 
     char* amt = argv[1];
-//        printf("spot2\n");
     fgORbg = strcmp(argv[0], "fg") ? 1 : 2;
-//        printf("i am here\n");
 
     isJid = (strstr(argv[1], "%") == NULL) ? 0 : 1;
     if(isJid){amt = (argv[1]+1);}
-//    printf("amt: %s\n", amt);
     int i = strtol(amt, NULL, 10);
 
-//    printf("spot3\n");
     if (isJid) {
-//        printf("%d\n", i);
         myJob = getjobjid(jobs, i); //TODO: need to remove %?
         //if wrong
         pid = myJob->pid;
@@ -476,7 +471,7 @@ void do_bgfg(char **argv)
 
 
 //    sleep(1);
-//    waitfg(pid);
+    waitfg(pid);
     return;
 }
 
