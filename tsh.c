@@ -544,11 +544,11 @@ void sigchld_handler(int sig)
         } else if (WIFSTOPPED(status)){
             printf("hello there\n");
             listjobs(jobs);
-            if(jobs[jid].state == FG) {
+//            if(jobs[jid].state == FG) {
                 jobs[jid].state = 3;
                 printf("job {%d} turned off", jid);
-            }
-            kill(-1*pid, SIGTSTP);
+//            }
+//            kill(-1*pid, SIGTSTP);
             printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
             listjobs(jobs);
         } else if (WIFCONTINUED(status)){
