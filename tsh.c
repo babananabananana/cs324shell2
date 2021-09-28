@@ -459,7 +459,8 @@ void do_bgfg(char **argv)
 
     if (isJid) {
 //        printf("%d, here0\n", i);
-        if (myJob = getjobjid(jobs, i) == NULL){
+        myJob = getjobjid(jobs, i);
+        if(!myJob){
             printf("%d No such job\n",jid);
             return;
         }
@@ -473,10 +474,15 @@ void do_bgfg(char **argv)
 //        printf("here1\n");
     } else{
         pid = i;
-        if (myJob = getjobpid(jobs, pid) == NULL){
+                printf("%d, here0\n", i);
+
+        myJob = getjobpid(jobs, pid);
+        if(!myJob){
             printf("%d No such process\n", pid);
             return;
         }
+                printf("%d, here1\n", i);
+
 
         //if wrong
         if(myJob->state == 3){
