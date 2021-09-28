@@ -543,6 +543,7 @@ void sigchld_handler(int sig)
             printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
         } else if (WIFSTOPPED(status)){
             printf("hello there\n");
+            listjobs(jobs);
             if(jobs[jid].state == 1) {
                 jobs[jid].state = 3;
                 printf("job {%d} turned off", jid);
