@@ -455,6 +455,7 @@ void do_bgfg(char **argv)
         myJob = getjobjid(jobs, i);
         if(!myJob){
             printf("%d No such job\n",jid);
+            return;
         }
         //if wrong
         pid = myJob->pid;
@@ -468,25 +469,20 @@ void do_bgfg(char **argv)
         myJob = getjobpid(jobs, pid);
         if(!myJob){
             printf("%d No such process\n", pid);
+            return;
         }
-        
+
         //if wrong
         if(myJob->state == 3){
             kill(pid, SIGCONT);
         }
         myJob->state = fgORbg;
     }
-
-//    printf("hi, %d: %d, (%d)\n", fgORbg, BG, pid);
-
     if(fgORbg == BG){
         jid = myJob->jid;
         cmdline = myJob->cmdline;
         printf("[%d] (%d) %s\n", jid, pid, cmdline);
     }
-
-
-//    sleep(1);
     waitfg(pid);
     return;
 }
