@@ -533,12 +533,10 @@ void sigchld_handler(int sig)
         if(WIFEXITED(status)){
             sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
             deletejob(jobs, pid);
-//            kill(pid, SIGCHLD);
             sigprocmask(SIG_SETMASK, &prev_all, NULL);
         } else if (WIFSIGNALED(status)) {
             sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
             deletejob(jobs, pid);
-//            kill(pid, SIGCHLD);
             sigprocmask(SIG_SETMASK, &prev_all, NULL);
             printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
         } else if (WIFSTOPPED(status)){
@@ -549,7 +547,6 @@ void sigchld_handler(int sig)
                 jobs[jid-1].state = ST;
 //                printf("job {%d} turned off", jid);
             }
-//            kill(-1*pid, SIGTSTP);
             printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
 //            printf("list:\n");
 //            listjobs(jobs);
@@ -597,13 +594,11 @@ void sigtstp_handler(int sig)
 
     kill((-1*pid), SIGTSTP);
     sleep(1);
-//    printf("i'm here\n");
-    for (int i = 0; i < MAXJOBS; i++) {
-        if (jobs[i].state == 1) {
-//            printf("job {%d} stopped\n", i);
-            jobs[i].state = 3;
-        }
-    }
+//    for (int i = 0; i < MAXJOBS; i++) {
+//        if (jobs[i].state == 1) {
+//            jobs[i].state = 3;
+//        }
+//    }
     errno = olderrno;
     return;
 }
