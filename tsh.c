@@ -407,6 +407,7 @@ int builtin_cmd(char **argv)
         return 1;
     }
     if(strcmp(argv[0], "fg") == 0){
+        printf("built");
         do_bgfg(argv);
         return 1;
     }
