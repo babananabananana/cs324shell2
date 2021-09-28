@@ -589,6 +589,7 @@ void sigtstp_handler(int sig)
 
     for (int i = 0; i < MAXJOBS; i++) {
         if (jobs[i].state == 1) {
+            printf("here1\n");
             jobs[i].state = 3;
         }
     }
