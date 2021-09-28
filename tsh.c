@@ -590,11 +590,11 @@ void sigtstp_handler(int sig)
     kill((-1*pid), SIGTSTP);
     sleep(1);
 
-//    for (int i = 0; i < MAXJOBS; i++) {
-//        if (jobs[i].state == 1) {
-//            jobs[i].state = 3;
-//        }
-//    }
+    for (int i = 0; i < MAXJOBS; i++) {
+        if (jobs[i].state == 1) {
+            jobs[i].state = 3;
+        }
+    }
     errno = olderrno;
     return;
 }
