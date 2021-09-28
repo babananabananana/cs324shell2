@@ -452,7 +452,6 @@ void do_bgfg(char **argv)
             kill(pid, SIGCONT);
         }
         myJob->state = fgORbg;
-        printf("hi, (%d)\n", pid);
     } else{
         myJob = getjobpid(jobs, i);
         pid = myJob->pid;
@@ -463,6 +462,8 @@ void do_bgfg(char **argv)
         }
         myJob->state = fgORbg;
     }
+
+    printf("hi, %d: %d, (%d)\n", fgORbg, BG, pid);
 
     if(fgORbg == BG){
         jid = myJob->jid;
