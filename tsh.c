@@ -464,6 +464,7 @@ void do_bgfg(char **argv)
             kill(pid, SIGCONT);
         }
         myJob->state = fgORbg;
+        printf("here1\n");
     } else{
         pid = i;
         myJob = getjobpid(jobs, pid);
@@ -483,6 +484,7 @@ void do_bgfg(char **argv)
         cmdline = myJob->cmdline;
         printf("[%d] (%d) %s\n", jid, pid, cmdline);
     }
+    printf("%d here2\n", pid);
     waitfg(pid);
     return;
 }
