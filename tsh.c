@@ -595,7 +595,7 @@ void sigtstp_handler(int sig)
     kill((-1*pid), SIGTSTP);
     sleep(1);
     printf("i'm here\n");
-    for (int i = 0; i < MAXJOBS; i++) {
+    for (int i = 1; i < MAXJOBS; i++) {
         if (jobs[i].state == 1) {
             printf("job {%d} stopped\n", i);
             jobs[i].state = 3;
