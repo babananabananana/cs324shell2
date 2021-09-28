@@ -473,8 +473,8 @@ void do_bgfg(char **argv)
     }
 
 
-    sleep(1);
-    waitfg(pid);
+//    sleep(1);
+//    waitfg(pid);
     return;
 }
 
