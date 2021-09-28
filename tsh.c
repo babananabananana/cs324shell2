@@ -435,7 +435,7 @@ void do_bgfg(char **argv)
         return;
     }
 
-    if(isdigit(argv[1][0]) || argv[1][0] == '%'){
+    if(isdigit(argv[1][0]) || argv[1][0] == "%"){
         int i = 0;
         while (argv[i] != 0){
             if (!isdigit(argv[i])){
