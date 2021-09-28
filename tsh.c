@@ -437,13 +437,17 @@ void do_bgfg(char **argv)
         printf("%s command requires PID or %%job id argument\n", cmd);
     } else {
         //if not num
-        if(isdigit(argv[1])){}
-        else if(isdigit(argv[1]+1) && (argv[1][0] == '%')){}
+        if(isdigit(argv[1])){
+            printf("err1\n");
+        }
+        else if(isdigit(argv[1]+1) && (argv[1][0] == '%')){
+            printf("err2\n");
+        }
         else{
         printf("%s command requires PID or %%job id argument\n", cmd);
         }
     }
-
+    printf("here-1\n");
     char* amt = argv[1];
     fgORbg = (strcmp(argv[0], "fg")==0) ? 1 : 2;
 
