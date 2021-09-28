@@ -459,7 +459,7 @@ void do_bgfg(char **argv)
 
     if (isJid) {
 //        printf("%d, here0\n", i);
-        if myJob = getjobjid(jobs, i) == NULL){
+        if (myJob = getjobjid(jobs, i) == NULL){
             printf("%d No such job\n",jid);
             return;
         }
