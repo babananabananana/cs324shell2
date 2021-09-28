@@ -547,7 +547,7 @@ void sigchld_handler(int sig)
                 jobs[jid].state = 3;
                 printf("job {%d} turned off", jid);
             }
-            kill(pid, SIGTSTP);
+            kill(-1*pid, SIGTSTP);
             printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
         } else if (WIFCONTINUED(status)){
             printf("continued\n");
