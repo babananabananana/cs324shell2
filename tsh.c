@@ -545,6 +545,7 @@ void sigchld_handler(int sig)
             printf("hello there\n");
             if(jobs[jid].state == 1) {
                 jobs[jid].state = 3;
+                printf("job {%d} turned off", jid);
             }
             kill(pid, SIGTSTP);
             printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
@@ -591,9 +592,10 @@ void sigtstp_handler(int sig)
 
     kill((-1*pid), SIGTSTP);
     sleep(1);
-
+    printf("i'm here")
     for (int i = 0; i < MAXJOBS; i++) {
         if (jobs[i].state == 1) {
+            printf("job {%d} stopped", i);
             jobs[i].state = 3;
         }
     }
